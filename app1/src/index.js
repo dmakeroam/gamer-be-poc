@@ -5,6 +5,7 @@ const app = express()
 
 /* Eureka Set Up */
 const client = new Eureka({
+  // application instance information
   instance: {
     app: 'app1',
     hostName: 'localhost:3000',
@@ -17,7 +18,7 @@ const client = new Eureka({
     dataCenterInfo: {
     '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
-    },
+    }
   },
   eureka: {
     // eureka server host / port
@@ -41,7 +42,7 @@ client.start()
 const exitHandler = (options, err) => {
     if (options.exit){
 
-      //client.stop()
+      client.stop()
 
       setTimeout(() => {
 
@@ -64,11 +65,11 @@ process.on('uncaughtException', exitHandler.bind(null, {exit:true}))
 /* Process Setup */
 
 app.get('/', (req, res) => {
-    res.json({message: 'Hello World from App1'})
+    res.send('Hello World')
 })
 
 // listen on port
-const port = 3000
+const port = 3001
 app.listen(port, () => {
   var listenerWelcomeMessage = `listening on ${port}`
   console.log(listenerWelcomeMessage)
